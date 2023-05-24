@@ -7,28 +7,29 @@ import java.time.LocalDate;
 
 public class OrderDAOImpl implements OrderDAO{
     public ResultSet getAllOrders() throws SQLException, ClassNotFoundException {
-        Connection connection = DBConnection.getDbConnection().getConnection();
-        Statement stm = connection.createStatement();
-        ResultSet rst = stm.executeQuery("SELECT oid FROM `Orders` ORDER BY oid DESC LIMIT 1;");
-        return rst;
-
+//        Connection connection = DBConnection.getDbConnection().getConnection();
+//        Statement stm = connection.createStatement();
+//        ResultSet rst = stm.executeQuery("SELECT oid FROM `Orders` ORDER BY oid DESC LIMIT 1;");
+//        return rst;
+        return SQLUtil.execute("SELECT oid FROM `Orders` ORDER BY oid DESC LIMIT 1;");
     }
 
-    public boolean selectOrderId(String orderId) {
-        try {
-            Connection connection = DBConnection.getDbConnection().getConnection();
-            PreparedStatement stm = connection.prepareStatement("SELECT oid FROM `Orders` WHERE oid=?");
-            stm.setString(1, orderId);
-            /*if order id already exist*/
-            return true;
-
-    } catch (SQLException throwables) {
-            throwables.printStackTrace();
-            return false;
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            return false;
-        }
+    public boolean selectOrderId(String orderId) throws SQLException, ClassNotFoundException {
+//        try {
+//            Connection connection = DBConnection.getDbConnection().getConnection();
+//            PreparedStatement stm = connection.prepareStatement("SELECT oid FROM `Orders` WHERE oid=?");
+//            stm.setString(1, orderId);
+//            /*if order id already exist*/
+//            return true;
+//
+//    } catch (SQLException throwables) {
+//            throwables.printStackTrace();
+//            return false;
+//        } catch (ClassNotFoundException e) {
+//            e.printStackTrace();
+//            return false;
+//        }
+        return SQLUtil.execute("SELECT oid FROM `Orders` WHERE oid=?",orderId);
     }
 
     public boolean saveOrder(String orderId, LocalDate orderDate, String customerId) throws SQLException {

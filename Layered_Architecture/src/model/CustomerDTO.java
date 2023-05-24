@@ -8,9 +8,9 @@ import java.io.Serializable;
  **/
 
 public class CustomerDTO implements Serializable {
-    private String id;
-    private String name;
-    private String address;
+    private static String id;
+    private static String name;
+    private static String address;
 
     public CustomerDTO() {
     }
