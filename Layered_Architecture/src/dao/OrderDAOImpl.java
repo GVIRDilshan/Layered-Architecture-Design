@@ -1,61 +1,49 @@
 package dao;
 
 import db.DBConnection;
+import model.OrderDTO;
 
 import java.sql.*;
-import java.time.LocalDate;
+import java.util.ArrayList;
 
-public class OrderDAOImpl implements OrderDAO{
-    public ResultSet getAllOrders() throws SQLException, ClassNotFoundException {
-//        Connection connection = DBConnection.getDbConnection().getConnection();
-//        Statement stm = connection.createStatement();
-//        ResultSet rst = stm.executeQuery("SELECT oid FROM `Orders` ORDER BY oid DESC LIMIT 1;");
-//        return rst;
-        return SQLUtil.execute("SELECT oid FROM `Orders` ORDER BY oid DESC LIMIT 1;");
+public class OrderDAOImpl implements CrudDAO<OrderDTO,String> {
+    @Override
+    public String generateNewID() throws SQLException, ClassNotFoundException {
+        ResultSet rst = SQLUtil.execute("SELECT oid FROM `Orders` ORDER BY oid DESC LIMIT 1;");
+        return rst.next() ? String.format("OID-%03d", (Integer.parseInt(rst.getString("oid").replace("OID-", "")) + 1)) : "OID-001";
     }
 
-    public boolean selectOrderId(String orderId) throws SQLException, ClassNotFoundException {
-//        try {
-//            Connection connection = DBConnection.getDbConnection().getConnection();
-//            PreparedStatement stm = connection.prepareStatement("SELECT oid FROM `Orders` WHERE oid=?");
-//            stm.setString(1, orderId);
-//            /*if order id already exist*/
-//            return true;
-//
-//    } catch (SQLException throwables) {
-//            throwables.printStackTrace();
-//            return false;
-//        } catch (ClassNotFoundException e) {
-//            e.printStackTrace();
-//            return false;
-//        }
-        return SQLUtil.execute("SELECT oid FROM `Orders` WHERE oid=?",orderId);
+    @Override
+    public boolean delete(String s) throws SQLException, ClassNotFoundException {
+        return false;
     }
 
-    public boolean saveOrder(String orderId, LocalDate orderDate, String customerId) throws SQLException {
-        Connection connection = null;
-        try {
-            connection =DBConnection.getDbConnection().getConnection();
-            connection.setAutoCommit(false);
-            PreparedStatement stm = connection.prepareStatement("INSERT INTO `Orders` (oid, date, customerID) VALUES (?,?,?)");
-            stm.setString(1, orderId);
-            stm.setDate(2, Date.valueOf(orderDate));
-            stm.setString(3, customerId);
-
-            if (stm.executeUpdate() != 1) {
-                connection.rollback();
-                connection.setAutoCommit(true);
-                return false;
-            }
-            return true;
-        }catch (SQLException throwables) {
-            throwables.printStackTrace();
-            return false;
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            return false;
-        }finally {
-            connection.setAutoCommit(true);
-        }
+    @Override
+    public OrderDTO search(String s) throws SQLException, ClassNotFoundException {
+        return null;
     }
+
+    @Override
+    public boolean exist(String orderId) throws SQLException, ClassNotFoundException {
+        ResultSet rs = SQLUtil.execute("SELECT oid FROM `Orders` WHERE oid=?", orderId);
+        return rs.next();
+    }
+
+    @Override
+    public ArrayList<OrderDTO> getAll() throws SQLException, ClassNotFoundException {
+        return null;
+    }
+
+    @Override
+    public boolean add(OrderDTO dto) throws SQLException, ClassNotFoundException {
+        String query = "INSERT INTO `Orders` (oid, date, customerID) VALUES (?,?,?)";
+        return SQLUtil.execute(query, dto.getOrderId(), Date.valueOf(dto.getOrderDate()), dto.getCustomerId());
+    }
+
+    @Override
+    public boolean update(OrderDTO dto) throws SQLException, ClassNotFoundException {
+        return false;
+    }
+
+
 }

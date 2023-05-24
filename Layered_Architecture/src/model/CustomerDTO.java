@@ -8,9 +8,9 @@ import java.io.Serializable;
  **/
 
 public class CustomerDTO implements Serializable {
-    private static String id;
-    private static String name;
-    private static String address;
+    private String id;
+    private String name;
+    private String address;
 
     public CustomerDTO() {
     }
@@ -21,7 +21,7 @@ public class CustomerDTO implements Serializable {
         this.address = address;
     }
 
-    public static String getId() {
+    public String getId() {
         return id;
     }
 
@@ -29,7 +29,7 @@ public class CustomerDTO implements Serializable {
         this.id = id;
     }
 
-    public static String getName() {
+    public String getName() {
         return name;
     }
 
@@ -37,7 +37,7 @@ public class CustomerDTO implements Serializable {
         this.name = name;
     }
 
-    public static String getAddress() {
+    public String getAddress() {
         return address;
     }
 
