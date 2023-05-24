@@ -21,7 +21,7 @@ public class CustomerDTO implements Serializable {
         this.address = address;
     }
 
-    public String getId() {
+    public static String getId() {
         return id;
     }
 
@@ -29,7 +29,7 @@ public class CustomerDTO implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
+    public static String getName() {
         return name;
     }
 
@@ -37,7 +37,7 @@ public class CustomerDTO implements Serializable {
         this.name = name;
     }
 
-    public String getAddress() {
+    public static String getAddress() {
         return address;
     }
 
