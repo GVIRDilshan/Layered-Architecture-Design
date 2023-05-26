@@ -1,7 +1,7 @@
 package controller;
 
-import bo.CustomerBO;
-import bo.CustomerBOImpl;
+import bo.custom.CustomerBO;
+import bo.custom.impl.CustomerBOImpl;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import javafx.application.Platform;
@@ -41,7 +41,6 @@ public class ManageCustomersFormController {
     public TableView<CustomerTM> tblCustomers;
     public JFXButton btnAddNewCustomer;
 
-    //DI (Property Injection)
     CustomerBO customerBO = new CustomerBOImpl();
 
     public void initialize() {
@@ -75,7 +74,8 @@ public class ManageCustomersFormController {
         tblCustomers.getItems().clear();
         try {
             /*Get all customers*/
-            ArrayList<CustomerDTO> allCustomers = customerBO.getAllCustomer();
+            ArrayList<CustomerDTO> allCustomers = customerBO.getAllCustomers();
+
             for (CustomerDTO c : allCustomers) {
                 tblCustomers.getItems().add(new CustomerTM(c.getId(), c.getName(), c.getAddress()));
             }
@@ -184,7 +184,7 @@ public class ManageCustomersFormController {
 
 
     boolean existCustomer(String id) throws SQLException, ClassNotFoundException {
-       return customerBO.existCustomer(id);
+        return customerBO.existCustomer(id);
     }
 
 
@@ -213,7 +213,7 @@ public class ManageCustomersFormController {
     private String generateNewId() {
         try {
             //Generate New ID
-            return customerBO.generateNewID();
+            return customerBO.generateNewCustomerID();
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, "Failed to generate a new id " + e.getMessage()).show();
         } catch (ClassNotFoundException e) {
