@@ -104,8 +104,6 @@ public class MainFormController {
             icon.setEffect(glow);
         }
     }
-
-
     @FXML
     private void navigate(MouseEvent event) throws IOException {
         if (event.getSource() instanceof ImageView) {
