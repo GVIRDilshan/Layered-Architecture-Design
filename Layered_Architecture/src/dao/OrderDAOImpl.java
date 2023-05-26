@@ -6,7 +6,7 @@ import model.OrderDTO;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class OrderDAOImpl implements CrudDAO<OrderDTO,String> {
+public class OrderDAOImpl implements OrderDAO {
     @Override
     public String generateNewID() throws SQLException, ClassNotFoundException {
         ResultSet rst = SQLUtil.execute("SELECT oid FROM `Orders` ORDER BY oid DESC LIMIT 1;");
