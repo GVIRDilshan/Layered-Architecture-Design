@@ -1,5 +1,6 @@
-package bo;
+package bo.custom.impl;
 
+import bo.custom.OrderBO;
 import dao.custom.OrderDAO;
 import dao.custom.impl.OrderDAOImpl;
 import model.OrderDTO;
@@ -7,7 +8,7 @@ import model.OrderDTO;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class OrderBOImpl implements OrderBO{
+public class OrderBOImpl implements OrderBO {
     private OrderDAO orderDAO = new OrderDAOImpl();
 
     @Override
