@@ -1,6 +1,7 @@
 package bo.custom.impl;
 
 import bo.custom.OrderDetailsBO;
+import dao.DAOFactory;
 import dao.custom.OrderDetailsDAO;
 import dao.custom.impl.OrderDetailsDAOImpl;
 import model.OrderDetailDTO;
@@ -9,7 +10,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class OrderDetailsBOImpl implements OrderDetailsBO {
-    private OrderDetailsDAO orderDetailsDAO = new OrderDetailsDAOImpl();
+//    private OrderDetailsDAO orderDetailsDAO = new OrderDetailsDAOImpl();
+
+    OrderDetailsDAO orderDetailsDAO = (OrderDetailsDAO) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOTypes.ORDER_DETAILS);
 
     @Override
     public ArrayList<OrderDetailDTO> getAllOrderDetail() throws SQLException, ClassNotFoundException {
