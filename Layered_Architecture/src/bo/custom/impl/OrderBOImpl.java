@@ -10,12 +10,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class OrderBOImpl implements OrderBO {
-//    private OrderDAO orderDAO = new OrderDAOImpl();
-
-    OrderDAO orderDAO = (OrderDAO) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOTypes.ORDER);
-
+    OrderDAO orderDAO= (OrderDAO) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOTypes.ORDER);
     @Override
-    public ArrayList<OrderDTO> getAllOrder() throws SQLException, ClassNotFoundException {
+    public ArrayList<OrderDTO> getAllOrders() throws SQLException, ClassNotFoundException {
         return orderDAO.getAll();
     }
 
@@ -35,7 +32,7 @@ public class OrderBOImpl implements OrderBO {
     }
 
     @Override
-    public String generateNewID() throws SQLException, ClassNotFoundException {
+    public String generateNewOrderID() throws SQLException, ClassNotFoundException {
         return orderDAO.generateNewID();
     }
 

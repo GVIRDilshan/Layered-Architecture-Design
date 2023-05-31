@@ -1,5 +1,6 @@
 package controller;
 
+import bo.BOFactory;
 import bo.custom.CustomerBO;
 import bo.custom.impl.CustomerBOImpl;
 import com.jfoenix.controls.JFXButton;
@@ -41,7 +42,7 @@ public class ManageCustomersFormController {
     public TableView<CustomerTM> tblCustomers;
     public JFXButton btnAddNewCustomer;
 
-    CustomerBO customerBO = new CustomerBOImpl();
+    private CustomerBO customerBO = (CustomerBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.CUSTOMER);
 
     public void initialize() {
         tblCustomers.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -75,7 +76,6 @@ public class ManageCustomersFormController {
         try {
             /*Get all customers*/
             ArrayList<CustomerDTO> allCustomers = customerBO.getAllCustomers();
-
             for (CustomerDTO c : allCustomers) {
                 tblCustomers.getItems().add(new CustomerTM(c.getId(), c.getName(), c.getAddress()));
             }
@@ -123,7 +123,6 @@ public class ManageCustomersFormController {
         tblCustomers.getSelectionModel().clearSelection();
     }
 
-
     public void btnSave_OnAction(ActionEvent actionEvent) {
         String id = txtCustomerId.getText();
         String name = txtCustomerName.getText();
@@ -149,8 +148,10 @@ public class ManageCustomersFormController {
                 //Add Customer
                 customerBO.addCustomer(new CustomerDTO(id,name,address));
 
+
                 tblCustomers.getItems().add(new CustomerTM(id, name, address));
             } catch (SQLException e) {
+                System.out.println(e);
                 new Alert(Alert.AlertType.ERROR, "Failed to save the customer " + e.getMessage()).show();
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
@@ -182,11 +183,9 @@ public class ManageCustomersFormController {
         btnAddNewCustomer.fire();
     }
 
-
     boolean existCustomer(String id) throws SQLException, ClassNotFoundException {
-        return customerBO.existCustomer(id);
+       return customerBO.existCustomer(id);
     }
-
 
     public void btnDelete_OnAction(ActionEvent actionEvent) {
         /*Delete Customer*/

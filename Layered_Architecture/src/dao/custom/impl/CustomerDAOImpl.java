@@ -50,12 +50,10 @@ public class CustomerDAOImpl implements CustomerDAO {
         }
     }
 
-
     @Override
     public boolean delete(String id) throws SQLException, ClassNotFoundException {
         return SQLUtil.execute("DELETE FROM Customer WHERE id=?", id);
     }
-
 
     @Override
     public CustomerDTO search(String id) throws SQLException, ClassNotFoundException {
@@ -63,5 +61,4 @@ public class CustomerDAOImpl implements CustomerDAO {
         rst.next();
         return new CustomerDTO(id + "", rst.getString("name"), rst.getString("address"));
     }
-
 }

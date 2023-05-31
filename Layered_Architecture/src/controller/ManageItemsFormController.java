@@ -1,5 +1,6 @@
 package controller;
 
+import bo.BOFactory;
 import bo.custom.ItemBO;
 import bo.custom.impl.ItemBOImpl;
 import com.jfoenix.controls.JFXButton;
@@ -41,7 +42,7 @@ public class ManageItemsFormController {
     public JFXTextField txtUnitPrice;
     public JFXButton btnAddNewItem;
 
-    ItemBO itemBO = new ItemBOImpl();
+    private ItemBO itemBO = (ItemBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.ITEM);
 
     public void initialize() {
         tblItems.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("code"));
@@ -77,7 +78,7 @@ public class ManageItemsFormController {
         tblItems.getItems().clear();
         try {
             /*Get all items*/
-            ArrayList<ItemDTO> allItems = itemBO.getAllItems();
+            ArrayList<ItemDTO> allItems = itemBO.getAllItem();
             for (ItemDTO i : allItems) {
                 tblItems.getItems().add(new ItemTM(i.getCode(), i.getDescription(), i.getUnitPrice(), i.getQtyOnHand()));
             }
@@ -178,7 +179,7 @@ public class ManageItemsFormController {
                     new Alert(Alert.AlertType.ERROR, code + " already exists").show();
                 }
                 //Save Item
-                itemBO.saveItem(new ItemDTO(code, description, unitPrice, qtyOnHand));
+                itemBO.addItem(new ItemDTO(code, description, unitPrice, qtyOnHand));
 
                 tblItems.getItems().add(new ItemTM(code, description, unitPrice, qtyOnHand));
 
@@ -211,15 +212,13 @@ public class ManageItemsFormController {
         btnAddNewItem.fire();
     }
 
-
     private boolean existItem(String code) throws SQLException, ClassNotFoundException {
         return itemBO.existItem(code);
     }
 
-
     private String generateNewId() {
         try {
-            return itemBO.generateNewCode();
+            return itemBO.generateNewItemCode();
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         } catch (ClassNotFoundException e) {
