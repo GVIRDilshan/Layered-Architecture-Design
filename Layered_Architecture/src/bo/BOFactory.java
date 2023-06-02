@@ -20,10 +20,14 @@ public class BOFactory {
 
     public SuperBO getBO(BOTypes types){
         switch (types){
-            case CUSTOMER : return new CustomerBOImpl();
-            case ITEM: return new ItemBOImpl();
-            case ORDER:return new OrderBOImpl();
-            case ORDER_DETAIL: return new OrderDetailBOImpl();
+            case CUSTOMER :
+                return new CustomerBOImpl();
+            case ITEM:
+                return new ItemBOImpl();
+            case ORDER:
+                return new OrderBOImpl();
+            case ORDER_DETAIL:
+                return new OrderDetailBOImpl();
             default:return null;
         }
     }

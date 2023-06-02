@@ -1,6 +1,7 @@
 package bo.custom;
 
 import bo.SuperBO;
+import entity.Customer;
 import model.CustomerDTO;
 
 import java.sql.SQLException;
@@ -19,5 +20,5 @@ public interface CustomerBO extends SuperBO {
 
     public boolean deleteCustomer(String id) throws SQLException, ClassNotFoundException;
 
-    public CustomerDTO searchCustomer(String id) throws SQLException, ClassNotFoundException;
+    public Customer searchCustomer(String id) throws SQLException, ClassNotFoundException;
 }
